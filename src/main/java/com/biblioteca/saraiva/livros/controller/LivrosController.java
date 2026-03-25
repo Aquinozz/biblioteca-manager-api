@@ -4,7 +4,10 @@ import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.service.LivrosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+<<<<<<< HEAD
 import org.springframework.http.ResponseEntity;
+=======
+>>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class LivrosController {
         this.livrosService = livrosService;
     }
 
+<<<<<<< HEAD
     @Operation(summary = "Acha livro pelo Id")
     @GetMapping("/{id}")
     public ResponseEntity<LivrosModel> buscarLivro(@PathVariable Long id) {
@@ -27,6 +31,8 @@ public class LivrosController {
         return ResponseEntity.ok(livro);
     }
 
+=======
+>>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
     @Operation(summary = "Lista todos os livros cadastrados")
     @GetMapping
     public List<LivrosModel> listarLivros(){

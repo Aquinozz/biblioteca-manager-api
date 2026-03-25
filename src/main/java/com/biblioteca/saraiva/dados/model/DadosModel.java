@@ -1,15 +1,24 @@
 package com.biblioteca.saraiva.dados.model;
 
 
+<<<<<<< HEAD
 import io.swagger.v3.oas.annotations.media.Schema;
+=======
+>>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 
 
 @Schema(description = "Modelo de dados")
+=======
+
+import java.time.LocalDateTime;
+
+>>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
 @Entity
 public class DadosModel {
 
