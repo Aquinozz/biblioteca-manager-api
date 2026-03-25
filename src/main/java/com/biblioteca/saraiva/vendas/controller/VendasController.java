@@ -1,7 +1,7 @@
 package com.biblioteca.saraiva.vendas.controller;
 
 
-import com.biblioteca.saraiva.livros.model.LivrosModel;
+
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.service.VendasService;
