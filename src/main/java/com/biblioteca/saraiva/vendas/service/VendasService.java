@@ -1,0 +1,108 @@
+package com.biblioteca.saraiva.vendas.service;
+
+import com.biblioteca.saraiva.livros.model.LivrosModel;
+import com.biblioteca.saraiva.livros.repository.LivrosRepository;
+import com.biblioteca.saraiva.vendas.dto.ItemRequest;
+import com.biblioteca.saraiva.vendas.dto.VendaRequest;
+import com.biblioteca.saraiva.vendas.model.ItemVenda;
+import com.biblioteca.saraiva.vendas.model.VendasModel;
+import com.biblioteca.saraiva.vendas.repository.VendasRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class VendasService {
+
+    private final LivrosRepository livrosRepository;
+    private final VendasRepository vendasRepository;
+
+    public VendasService(LivrosRepository livrosRepository,
+                         VendasRepository vendasRepository) {
+        this.livrosRepository = livrosRepository;
+        this.vendasRepository = vendasRepository;
+    }
+
+
+
+    public VendasModel buscarPorId(Long id) {
+        return vendasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
+    }
+
+    public List<VendasModel> listarVendas() {
+        return vendasRepository.findAll();
+    }
+
+
+    public VendasModel vender(VendaRequest request) {
+
+        // Cria uma nova venda
+        VendasModel venda = new VendasModel();
+
+        // Define a forma de pagamento recebida no request
+        venda.setFormaPagamento(request.getFormaPagamento());
+
+        // Lista que vai armazenar os itens da venda
+        List<ItemVenda> itens = new ArrayList<>();
+
+        // Variável para acumular o valor total da venda
+        BigDecimal total = BigDecimal.ZERO;
+
+        // Percorre cada item enviado no request
+        for (ItemRequest itemReq : request.getItens()) {
+
+            // Busca o livro no banco pelo ID
+            LivrosModel livro = livrosRepository.findById(itemReq.getLivroId())
+                    .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
+            // Verifica se há quantidade suficiente em estoque
+            if (livro.getQuantidade() < itemReq.getQuantidade()) {
+                throw new RuntimeException("Estoque insuficiente");
+            }
+
+            // Cria um novo item de venda
+            ItemVenda item = new ItemVenda();
+
+            // Associa o item ao livro
+            item.setLivro(livro);
+
+            // Associa o item à venda
+            item.setVenda(venda);
+
+            // Define a quantidade vendida
+            item.setQuantidade(itemReq.getQuantidade());
+
+            // Define o preço unitário do livro no momento da venda
+            item.setPrecoUnitario(livro.getPreco());
+
+            // Calcula o subtotal (preço * quantidade)
+            BigDecimal subtotal = livro.getPreco()
+                    .multiply(BigDecimal.valueOf(itemReq.getQuantidade()));
+
+            // Soma o subtotal ao total da venda
+            total = total.add(subtotal);
+
+            // Atualiza o estoque do livro
+            livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
+
+            // Adiciona o item à lista de itens da venda
+            itens.add(item);
+        }
+
+        // Define os itens na venda
+        venda.setItens(itens);
+
+        // Define o valor total da venda
+        venda.setValorTotal(total);
+
+        // Salva a venda no banco (os itens também são salvos por cascade)
+        vendasRepository.save(venda);
+
+        // Retorna a venda criada
+        return venda;
+    }
+}
