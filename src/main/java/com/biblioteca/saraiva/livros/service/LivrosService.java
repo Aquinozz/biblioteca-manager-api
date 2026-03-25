@@ -17,14 +17,12 @@ public class LivrosService {
     private LivrosRepository livrosRepository;
 
 
-<<<<<<< HEAD
+
     public LivrosModel buscarPorId(Long id) {
         return livrosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
     }
-=======
 
->>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
 
     public List<LivrosModel> listarTodos() {
         return livrosRepository.findAll();

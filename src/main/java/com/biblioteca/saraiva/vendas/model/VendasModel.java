@@ -1,19 +1,17 @@
 package com.biblioteca.saraiva.vendas.model;
 
-<<<<<<< HEAD
+
 import io.swagger.v3.oas.annotations.media.Schema;
-=======
->>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
+
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
+
 @Schema(description = "Modelo de vendas")
-=======
->>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
+
 @Entity
 @Table(name = "vendas")
 public class VendasModel {

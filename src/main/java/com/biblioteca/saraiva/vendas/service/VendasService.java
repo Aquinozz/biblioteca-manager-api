@@ -28,13 +28,12 @@ public class VendasService {
 
 
 
-<<<<<<< HEAD
+
     public VendasModel buscarPorId(Long id) {
         return vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
     }
-=======
->>>>>>> 6b965b9a60a57c94dbb9c4442fc08bed6fc7f9a3
+
 
     public List<VendasModel> listarVendas() {
         return vendasRepository.findAll();
