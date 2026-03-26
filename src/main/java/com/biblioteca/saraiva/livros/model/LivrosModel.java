@@ -18,10 +18,15 @@ public class LivrosModel {
     private String titulo;
     private String autor;
     private String descricao;
+    private String categoria;
     private Integer anoCriacao;
     private BigDecimal preco;
     private Integer quantidade;
 
+
+    public String getCategoria() {return categoria;}
+
+    public void setCategoria(String categoria){this.categoria = categoria;}
 
     public Long getId() {
         return id;

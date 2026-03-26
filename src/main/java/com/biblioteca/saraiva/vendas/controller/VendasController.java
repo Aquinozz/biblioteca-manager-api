@@ -39,6 +39,12 @@ public class VendasController {
         return ResponseEntity.ok(venda);
     }
 
+    @Operation(summary = "Deleta venda pelo id")
+    @DeleteMapping ("/{id}")
+    public void deletarVenda (@PathVariable Long id){
+        vendasService.deletarVenda(id);
+    }
+
 
     @Operation(summary = "Realiza uma nova venda de livros")
     @PostMapping

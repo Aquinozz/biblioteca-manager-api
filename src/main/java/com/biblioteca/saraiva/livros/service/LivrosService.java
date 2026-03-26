@@ -43,6 +43,23 @@ public class LivrosService {
     }
 
 
+    public List<LivrosModel> filtrar (String autor, String titulo, String categoria){
+
+        if (autor != null) {
+            return livrosRepository.findByAutorContainingIgnoreCase(autor);
+        }
+
+        if (titulo != null){
+            return livrosRepository.findByTituloContainingIgnoreCase(titulo);
+        }
+
+        if (categoria != null){
+            return livrosRepository.findByCategoriaContainingIgnoreCase(categoria);
+        }
+
+        return livrosRepository.findAll();
+    }
+
     public LivrosModel atualizar(Long id, LivrosModel dadosAtualizados){
 
         LivrosModel livro = livrosRepository.findById(id)

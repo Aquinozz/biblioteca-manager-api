@@ -32,10 +32,17 @@ public class LivrosController {
     }
 
 
-    @Operation(summary = "Lista todos os livros cadastrados")
+    @Operation(summary = "Lista todos os livros cadastrados ou por categoria, autor e titulo")
     @GetMapping
-    public List<LivrosModel> listarLivros(){
-        return livrosService.listarTodos();
+    public ResponseEntity <List<LivrosModel>> listarLivros(
+            @RequestParam (required = false) String autor,
+            @RequestParam (required = false) String titulo,
+            @RequestParam (required = false) String categoria
+            )
+    {
+
+        List<LivrosModel> livros = livrosService.filtrar(autor, titulo, categoria);
+        return ResponseEntity.ok(livros);
     }
 
     @Operation(summary = "Cria um novo livro")

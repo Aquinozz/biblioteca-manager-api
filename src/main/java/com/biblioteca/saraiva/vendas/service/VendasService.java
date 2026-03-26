@@ -7,8 +7,8 @@ import com.biblioteca.saraiva.vendas.dto.VendaRequest;
 import com.biblioteca.saraiva.vendas.model.ItemVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,8 +30,27 @@ public class VendasService {
 
 
     public VendasModel buscarPorId(Long id) {
-        return vendasRepository.findById(id)
+        VendasModel vendas = vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
+
+        vendasRepository.delete(vendas);
+        return vendas;
+    }
+
+    @Transactional
+    public void deletarVenda(Long id){
+        VendasModel venda = vendasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
+
+        for (ItemVenda item : venda.getItens()) {
+            LivrosModel livro = item.getLivro();
+
+            livro.setQuantidade(
+                    livro.getQuantidade() + item.getQuantidade()
+            );
+        }
+
+        vendasRepository.delete(venda);
     }
 
 

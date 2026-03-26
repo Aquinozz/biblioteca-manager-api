@@ -20,6 +20,8 @@ public class DadosService {
         this.dadosRepository = dadosRepository;
     }
 
+
+
     public Double getFaturamentoTotal(){
 
         Double total = vendasRepository.somarTotalVendas();
