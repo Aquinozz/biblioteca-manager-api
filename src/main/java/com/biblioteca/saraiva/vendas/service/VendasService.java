@@ -120,7 +120,7 @@ public class VendasService {
         // Define o valor total da venda
         venda.setValorTotal(total);
 
-        // Salva a venda no banco (os itens também são salvos por cascade)
+        // Salva a venda no banco
         vendasRepository.save(venda);
 
         // Retorna a venda criada
