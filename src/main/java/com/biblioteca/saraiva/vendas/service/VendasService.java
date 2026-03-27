@@ -38,7 +38,7 @@ public class VendasService {
     }
 
     @Transactional
-    public void deletarVenda(Long id){
+    public void cancelarVenda(Long id){
         VendasModel venda = vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
 
