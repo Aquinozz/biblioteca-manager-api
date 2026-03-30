@@ -35,22 +35,13 @@ public class DadosService {
 
     public Double getTicketMedio(){
 
-        if (dadosRepository.existsByDataGeracaoBetween(
-                LocalDateTime.now().toLocalDate().atStartOfDay(),
-                LocalDateTime.now().toLocalDate().atTime(23,59,59)
-        )) {
-            return null;
-        }
-            {
+        Double total = getFaturamentoTotal();
+        Long quantidade = getTotalVendas();
 
-                Double total = getFaturamentoTotal();
-                Long quantidade = getTotalVendas();
+        if (quantidade == 0) return 0.0;
 
-                if (quantidade == 0) return 0.0;
-
-                return total / quantidade;
-            }
-        }
+        return total / quantidade;
+    }
 
     public DadosModel salvarHistorico(){
         Double faturamento = getFaturamentoTotal();

@@ -65,12 +65,24 @@ public class LivrosService {
         LivrosModel livro = livrosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
-        livro.setTitulo(dadosAtualizados.getTitulo());
-        livro.setAutor(dadosAtualizados.getAutor());
-        livro.setDescricao(dadosAtualizados.getDescricao());
-        livro.setAnoCriacao(dadosAtualizados.getAnoCriacao());
-        livro.setPreco(dadosAtualizados.getPreco());
-        livro.setQuantidade(dadosAtualizados.getQuantidade());
+        if (dadosAtualizados.getTitulo() != null) {
+            livro.setTitulo(dadosAtualizados.getTitulo());
+        }
+        if (dadosAtualizados.getAutor() != null) {
+            livro.setAutor(dadosAtualizados.getAutor());
+        }
+        if (dadosAtualizados.getDescricao() != null) {
+            livro.setDescricao(dadosAtualizados.getDescricao());
+        }
+        if (dadosAtualizados.getAnoCriacao() != null) {
+            livro.setAnoCriacao(dadosAtualizados.getAnoCriacao());
+        }
+        if (dadosAtualizados.getPreco() != null) {
+            livro.setPreco(dadosAtualizados.getPreco());
+        }
+        if (dadosAtualizados.getQuantidade() != null) {
+            livro.setQuantidade(dadosAtualizados.getQuantidade());
+        }
 
         return livrosRepository.save(livro);
     }

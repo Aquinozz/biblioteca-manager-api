@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface VendasRepository extends JpaRepository<VendasModel, Long> {
 
-    @Query("SELECT SUM(v.valorTotal) FROM VendasModel v")
+    @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM VendasModel v")
     Double somarTotalVendas();
 }

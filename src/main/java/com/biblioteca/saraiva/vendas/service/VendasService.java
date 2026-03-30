@@ -33,7 +33,6 @@ public class VendasService {
         VendasModel vendas = vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
 
-        vendasRepository.delete(vendas);
         return vendas;
     }
 
@@ -59,6 +58,7 @@ public class VendasService {
     }
 
 
+    @Transactional
     public VendasModel vender(VendaRequest request) {
 
         // Cria uma nova venda
@@ -109,6 +109,7 @@ public class VendasService {
 
             // Atualiza o estoque do livro
             livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
+            livrosRepository.save(livro);
 
             // Adiciona o item à lista de itens da venda
             itens.add(item);
