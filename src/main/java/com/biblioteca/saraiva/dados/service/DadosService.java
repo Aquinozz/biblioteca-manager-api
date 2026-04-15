@@ -5,7 +5,6 @@ import com.biblioteca.saraiva.dados.model.DadosModel;
 import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,6 +46,8 @@ public class DadosService {
         Double faturamento = getFaturamentoTotal();
         Long total = getTotalVendas();
         Double ticket = getTicketMedio();
+
+
 
         DadosModel dados = new DadosModel();
         dados.setFaturamento(faturamento);

@@ -12,15 +12,28 @@ public class LivrosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
-
+    @Column(nullable = false)
     private String titulo;
+
+    @Column(nullable = false)
     private String autor;
+
+    @Column(nullable = false)
     private String descricao;
+
+    @Column(nullable = false)
     private String categoria;
+
+    @Column(nullable = false)
     private Integer anoCriacao;
+
+    @Column(nullable = false)
     private BigDecimal preco;
+
+    @Column(nullable = false)
     private Integer quantidade;
 
 

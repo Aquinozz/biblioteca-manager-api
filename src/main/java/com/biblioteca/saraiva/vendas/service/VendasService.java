@@ -53,6 +53,7 @@ public class VendasService {
     }
 
 
+
     public List<VendasModel> listarVendas() {
         return vendasRepository.findAll();
     }
