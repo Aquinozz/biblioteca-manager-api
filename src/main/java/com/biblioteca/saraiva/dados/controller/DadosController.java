@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.dados.controller;
 
+import com.biblioteca.saraiva.dados.dto.DadosResponse;
 import com.biblioteca.saraiva.dados.model.DadosModel;
 import com.biblioteca.saraiva.dados.service.DadosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,33 +20,11 @@ public class DadosController {
         this.dadosService = dadosService;
     }
 
-    @Operation(summary = "Retorna o faturamento total das vendas")
-    @GetMapping("/faturamento")
-    public Double getFaturamento(){
-        return dadosService.getFaturamentoTotal();
+
+    @Operation(summary = "Retorna um resumo de dados sobre lucro e etc...")
+    @GetMapping
+    public DadosResponse getDados(){
+        return dadosService.getDadosGerais();
     }
 
-    @Operation(summary = "Retorna o total de vendas realizadas")
-    @GetMapping("/total-vendas")
-    public Long getTotalVendas(){
-        return dadosService.getTotalVendas();
-    }
-
-    @Operation(summary = "Retorna o ticket médio das vendas")
-    @GetMapping("/ticket-medio")
-    public Double getTicketMedio(){
-        return dadosService.getTicketMedio();
-    }
-
-    @Operation(summary = "Salva um snapshot do histórico de dados")
-    @PostMapping("/historico")
-    public DadosModel salvarHistorico(){
-        return dadosService.salvarHistorico();
-    }
-
-    @Operation(summary = "Lista o histórico de métricas salvas")
-    @GetMapping("/historico")
-    public List<DadosModel> listarHistorico(){
-        return dadosService.getHistorico();
-    }
 }

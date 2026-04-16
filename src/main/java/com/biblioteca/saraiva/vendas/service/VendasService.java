@@ -1,5 +1,7 @@
 package com.biblioteca.saraiva.vendas.service;
 
+import com.biblioteca.saraiva.dados.model.DadosModel;
+import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;
@@ -19,12 +21,16 @@ public class VendasService {
 
     private final LivrosRepository livrosRepository;
     private final VendasRepository vendasRepository;
+    private final DadosRepository dadosRepository;
 
     public VendasService(LivrosRepository livrosRepository,
-                         VendasRepository vendasRepository) {
+                         VendasRepository vendasRepository,
+                         DadosRepository dadosRepository) {
         this.livrosRepository = livrosRepository;
         this.vendasRepository = vendasRepository;
+        this.dadosRepository = dadosRepository;
     }
+
 
 
 
@@ -107,6 +113,7 @@ public class VendasService {
 
             // Soma o subtotal ao total da venda
             total = total.add(subtotal);
+
 
             // Atualiza o estoque do livro
             livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());

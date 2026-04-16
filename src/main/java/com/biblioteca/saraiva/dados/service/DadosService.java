@@ -1,12 +1,9 @@
 package com.biblioteca.saraiva.dados.service;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import com.biblioteca.saraiva.dados.model.DadosModel;
+import com.biblioteca.saraiva.dados.dto.DadosResponse;
 import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class DadosService {
@@ -20,52 +17,29 @@ public class DadosService {
     }
 
 
-
-    public Double getFaturamentoTotal(){
-
-        Double total = vendasRepository.somarTotalVendas();
-        return total != null ? total : 0.0;
-    }
-
     public Long getTotalVendas(){
         return vendasRepository.count();
 
     }
 
-    public Double getTicketMedio(){
+    public DadosResponse getDadosGerais(){
 
         Double total = getFaturamentoTotal();
         Long quantidade = getTotalVendas();
 
-        if (quantidade == 0) return 0.0;
+        Double ticket = (quantidade == 0) ? 0.0 : total / quantidade;
 
-        return total / quantidade;
+        return new DadosResponse(total, quantidade, ticket);
     }
 
-    public DadosModel salvarHistorico(){
-        Double faturamento = getFaturamentoTotal();
-        Long total = getTotalVendas();
-        Double ticket = getTicketMedio();
 
 
 
-        DadosModel dados = new DadosModel();
-        dados.setFaturamento(faturamento);
-        dados.setTotalVendas(total);
-        dados.setTicketMedio(ticket);
-        dados.setDataGeracao(LocalDateTime.now());
+    public Double getFaturamentoTotal() {
 
-        return dadosRepository.save(dados);
+        Double total = vendasRepository.somarTotalVendas();
+        return total != null ? total : 0.0;
+
     }
-
-    public List<DadosModel> getHistorico() {
-        return dadosRepository.findAllByOrderByDataGeracaoDesc();
-    }
-
-    @Scheduled(cron = "0 0 0 * * ?") // todo dia à meia-noite
-    public void salvarHistoricoAutomatico() {
-        salvarHistorico();
-    }
-
 
 }
