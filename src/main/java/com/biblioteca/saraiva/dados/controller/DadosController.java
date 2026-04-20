@@ -1,13 +1,14 @@
 package com.biblioteca.saraiva.dados.controller;
 
 import com.biblioteca.saraiva.dados.dto.DadosResponse;
-import com.biblioteca.saraiva.dados.model.DadosModel;
 import com.biblioteca.saraiva.dados.service.DadosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "Dados", description = "Métricas e estatísticas do sistema de vendas")
 @RestController
@@ -25,6 +26,32 @@ public class DadosController {
     @GetMapping
     public DadosResponse getDados(){
         return dadosService.getDadosGerais();
+    }
+
+    @Operation(summary = "Exportar dados em PDF ou XML")
+    @GetMapping ("/exportar")
+    public void exportar(@RequestParam String formato, HttpServletResponse response) throws Exception {
+        DadosResponse dados = dadosService.getDadosGerais();
+
+        if ("xml".equalsIgnoreCase(formato)) {
+            response.setContentType("application/xml");
+            response.setHeader("Content-Disposition", "attachment; filename=dados.xml");
+
+            com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapper = new com.fasterxml.jackson.dataformat.xml.XmlMapper();
+
+            xmlMapper.writerWithDefaultPrettyPrinter().writeValue(response.getOutputStream(), dados);
+        }
+        else {
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=dados.pdf");
+
+            // Transforma o texto em PDF
+            String html = dadosService.gerarHtmlSimples(dados);
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(html);
+            renderer.layout();
+            renderer.createPDF(response.getOutputStream());
+        }
     }
 
 }

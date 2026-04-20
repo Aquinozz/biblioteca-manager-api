@@ -11,6 +11,8 @@ public interface VendasRepository extends JpaRepository<VendasModel, Long> {
     @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM VendasModel v")
     Double somarTotalVendas();
 
+
     @Query("SELECT MAX(v.dataVenda) FROM VendasModel v")
     LocalDateTime buscarUltimaVenda();
+
 }

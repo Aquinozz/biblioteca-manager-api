@@ -32,6 +32,6 @@ public class DadosResponse {
         return ticketMedio;
     }
 
-    public LocalDateTime getRegistro() {return ultimoRegistro;}
+    public LocalDateTime getUltimoRegistro() {return ultimoRegistro;}
 
 }

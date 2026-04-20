@@ -1,6 +1,5 @@
 package com.biblioteca.saraiva.vendas.service;
 
-import com.biblioteca.saraiva.dados.model.DadosModel;
 import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
@@ -21,14 +20,11 @@ public class VendasService {
 
     private final LivrosRepository livrosRepository;
     private final VendasRepository vendasRepository;
-    private final DadosRepository dadosRepository;
 
     public VendasService(LivrosRepository livrosRepository,
-                         VendasRepository vendasRepository,
-                         DadosRepository dadosRepository) {
+                         VendasRepository vendasRepository) {
         this.livrosRepository = livrosRepository;
         this.vendasRepository = vendasRepository;
-        this.dadosRepository = dadosRepository;
     }
 
 
