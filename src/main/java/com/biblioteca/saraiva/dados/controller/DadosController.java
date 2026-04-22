@@ -5,8 +5,6 @@ import com.biblioteca.saraiva.dados.service.DadosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -46,7 +44,7 @@ public class DadosController {
             response.setHeader("Content-Disposition", "attachment; filename=dados.pdf");
 
             // Transforma o texto em PDF
-            String html = dadosService.gerarHtmlSimples(dados);
+            String html = dadosService.gerarHtml(dados);
             ITextRenderer renderer = new ITextRenderer();
             renderer.setDocumentFromString(html);
             renderer.layout();

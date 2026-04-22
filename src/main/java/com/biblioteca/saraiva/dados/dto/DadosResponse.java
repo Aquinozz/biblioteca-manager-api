@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.dados.dto;
 
+import com.biblioteca.saraiva.vendas.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ public class DadosResponse {
     private Long totalVendas;
     private Double ticketMedio;
 
-    @JsonFormat (pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = DataUtils.DATA_TIME_PATTERN)
     private LocalDateTime ultimoRegistro;
 
     public DadosResponse(Double faturamentoTotal, Long totalVendas, Double ticketMedio, LocalDateTime ultimoRegistro) {

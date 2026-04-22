@@ -15,4 +15,5 @@ public interface VendasRepository extends JpaRepository<VendasModel, Long> {
     @Query("SELECT MAX(v.dataVenda) FROM VendasModel v")
     LocalDateTime buscarUltimaVenda();
 
+
 }

@@ -28,7 +28,7 @@ public class DadosService {
         Double total = getFaturamentoTotal();
         Long quantidade = getTotalVendas();
 
-        Double ticket = (quantidade == 0) ? 0.0 : total / quantidade;
+        Double ticket = getTicketMedio();
 
         return new DadosResponse(total, quantidade, ticket, ultimoRegistro);
     }
@@ -38,6 +38,15 @@ public class DadosService {
 
     }
 
+    public Double getTicketMedio(){
+        Double total = getFaturamentoTotal();
+        Long quantidade = getTotalVendas();
+
+        Double ticket = (quantidade == 0) ? 0.0 : total / quantidade;
+
+        return ticket;
+    }
+
     public Double getFaturamentoTotal() {
 
         Double total = vendasRepository.somarTotalVendas();
@@ -45,7 +54,7 @@ public class DadosService {
 
     }
 
-    public String gerarHtmlSimples(DadosResponse dados) {
+    public String gerarHtml(DadosResponse dados) {
         return "<html><body>" +
                 "<h1>Relatorio de Vendas</h1>" +
                 "<p>Faturamento: R$ " + String.format("%.2f", dados.getFaturamentoTotal()) + "</p>" +

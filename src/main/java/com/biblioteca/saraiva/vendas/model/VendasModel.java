@@ -1,6 +1,7 @@
 package com.biblioteca.saraiva.vendas.model;
 
 
+import com.biblioteca.saraiva.vendas.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -21,7 +22,8 @@ public class VendasModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+
+    @JsonFormat(pattern = DataUtils.DATA_TIME_PATTERN)
     @Column(name = "data_venda")
     private LocalDateTime dataVenda;
 
