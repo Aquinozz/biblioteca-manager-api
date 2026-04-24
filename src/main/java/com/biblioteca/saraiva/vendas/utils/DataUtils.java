@@ -9,6 +9,7 @@ public class DataUtils {
 
     public static final String  DATA_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
 
+
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATA_TIME_PATTERN);
 
     public static String format (LocalDateTime dateTime){

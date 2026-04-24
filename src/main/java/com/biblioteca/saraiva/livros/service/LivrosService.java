@@ -23,8 +23,13 @@ public class LivrosService {
     }
 
 
-    public List<LivrosModel> listarTodos() {
-        return livrosRepository.findAll();
+
+
+    public LivrosModel salvar(LivrosModel livro) {
+
+
+
+        return livrosRepository.save(livro);
     }
 
 
@@ -38,6 +43,7 @@ public class LivrosService {
 
 
     public List<LivrosModel> filtrar (String autor, String titulo, String categoria){
+
 
         if (autor != null) {
             return livrosRepository.findByAutorContainingIgnoreCase(autor);
