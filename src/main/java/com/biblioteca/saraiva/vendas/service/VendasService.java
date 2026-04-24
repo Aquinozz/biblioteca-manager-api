@@ -1,6 +1,5 @@
 package com.biblioteca.saraiva.vendas.service;
 
-import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;

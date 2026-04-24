@@ -1,7 +1,6 @@
 package com.biblioteca.saraiva.dados.service;
 
 import com.biblioteca.saraiva.dados.dto.DadosResponse;
-import com.biblioteca.saraiva.dados.repository.DadosRepository;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import org.springframework.stereotype.Service;
 
