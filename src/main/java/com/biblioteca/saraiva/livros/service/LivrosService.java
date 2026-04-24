@@ -28,14 +28,6 @@ public class LivrosService {
     }
 
 
-    public LivrosModel salvar(LivrosModel livro) {
-
-
-
-        return livrosRepository.save(livro);
-    }
-
-
 
     public void deletar(Long id) {
         LivrosModel livro = livrosRepository.findById(id)
