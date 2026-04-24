@@ -27,10 +27,11 @@ public class DadosService {
         LocalDateTime ultimoRegistro = getRegistro();
         Double total = getFaturamentoTotal();
         Long quantidade = getTotalVendas();
+        Long livrosVendidos = getLivrosVendidos();
 
         Double ticket = getTicketMedio();
 
-        return new DadosResponse(total, quantidade, ticket, ultimoRegistro);
+        return new DadosResponse(total, quantidade, ticket, ultimoRegistro, livrosVendidos);
     }
 
     public LocalDateTime getRegistro() {
@@ -47,6 +48,13 @@ public class DadosService {
         return ticket;
     }
 
+    public Long getLivrosVendidos() {
+
+        Long totalLivros = vendasRepository.somarQuantidadePorVenda();
+
+        return totalLivros != null ? totalLivros : 0;
+    }
+
     public Double getFaturamentoTotal() {
 
         Double total = vendasRepository.somarTotalVendas();
@@ -61,6 +69,7 @@ public class DadosService {
                 "<p>Total de Vendas: " + dados.getTotalVendas() + "</p>" +
                 "<p>Data: " + dados.getUltimoRegistro().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</p>" +
                 "<p>Ticket Médio: R$ " + String.format("%.2f", dados.getTicketMedio()) + "</p>" +
+                "<p> Total de livros vendidos: " + dados.getLivrosVendidos() + "</p>" +
                 "</body></html>";
     }
 }

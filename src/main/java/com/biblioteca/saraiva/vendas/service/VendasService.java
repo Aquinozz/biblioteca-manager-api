@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class VendasService {
@@ -64,71 +66,67 @@ public class VendasService {
     @Transactional
     public VendasModel vender(VendaRequest request) {
 
-        // Cria uma nova venda
-        VendasModel venda = new VendasModel();
+        //Pegar todos os IDs de livros p depois buscar de uma vez só
+        List<Long> idsLivros = request.getItens().stream() //".stream()" ele abre um fluxo dos itens da requisição
+                .map(ItemRequest::getLivroId) //ele fala para extrair só o ID
+                .toList(); //fecha o fluxo com uma lista
 
-        // Define a forma de pagamento recebida no request
+        //Aqui ele busca todos os livros
+        List<LivrosModel> livrosNoBanco = livrosRepository.findAllById(idsLivros);
+
+        //Usar um map pra ficar mais rapido o acesso dos IDs no loop
+        Map<Long, LivrosModel> mapaLivros = livrosNoBanco.stream() //usando a query de cima
+                .collect(Collectors.toMap(LivrosModel::getId, livro -> livro));
+
+
+        VendasModel venda = new VendasModel();
         venda.setFormaPagamento(request.getFormaPagamento());
 
-        // Lista que vai armazenar os itens da venda
-        List<ItemVenda> itens = new ArrayList<>();
+        List<ItemVenda> itensVenda = new ArrayList<>();
+        BigDecimal totalVenda = BigDecimal.ZERO;
 
-        // Variável para acumular o valor total da venda
-        BigDecimal total = BigDecimal.ZERO;
-
-        // Percorre cada item enviado no request
+        // Processando os itens
         for (ItemRequest itemReq : request.getItens()) {
 
-            // Busca o livro no banco pelo ID
-            LivrosModel livro = livrosRepository.findById(itemReq.getLivroId())
-                    .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+            LivrosModel livro = mapaLivros.get(itemReq.getLivroId());
 
-            // Verifica se há quantidade suficiente em estoque
-            if (livro.getQuantidade() < itemReq.getQuantidade()) {
-                throw new RuntimeException("Estoque insuficiente");
+
+            if (livro == null) {
+                throw new RuntimeException("Livro ID" + itemReq.getLivroId() + " não encontrado");
+
             }
 
-            // Cria um novo item de venda
+            if (livro.getQuantidade() < itemReq.getQuantidade()) {
+                throw new RuntimeException("Estoque insuficiente para o livro: " + livro.getTitulo());
+            }
+
+            //Atualiza o estoque
+            livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
+
+            //Criar item de benda
             ItemVenda item = new ItemVenda();
-
-            // Associa o item ao livro
             item.setLivro(livro);
-
-            // Associa o item à venda
             item.setVenda(venda);
-
-            // Define a quantidade vendida
             item.setQuantidade(itemReq.getQuantidade());
-
-            // Define o preço unitário do livro no momento da venda
             item.setPrecoUnitario(livro.getPreco());
 
-            // Calcula o subtotal (preço * quantidade)
-            BigDecimal subtotal = livro.getPreco()
-                    .multiply(BigDecimal.valueOf(itemReq.getQuantidade()));
+            BigDecimal subtotal = livro.getPreco().multiply(BigDecimal.valueOf(itemReq.getQuantidade()));
+            totalVenda = totalVenda.add(subtotal);
 
-            // Soma o subtotal ao total da venda
-            total = total.add(subtotal);
+            itensVenda.add(item);
 
 
-            // Atualiza o estoque do livro
-            livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
-            livrosRepository.save(livro);
 
-            // Adiciona o item à lista de itens da venda
-            itens.add(item);
         }
 
-        // Define os itens na venda
-        venda.setItens(itens);
+        venda.setItens(itensVenda);
+        venda.setValorTotal(totalVenda);
 
-        // Define o valor total da venda
-        venda.setValorTotal(total);
 
-        // Salva a venda no banco
-        vendasRepository.save(venda);
+        //Salva tudo atualizado de uma vez só
+        livrosRepository.saveAll(livrosNoBanco);
 
-        // Retorna a venda criada
-        return venda;
+        // Salva a venda
+        return vendasRepository.save(venda);
     }
 }

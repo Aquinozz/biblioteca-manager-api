@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface VendasRepository extends JpaRepository<VendasModel, Long> {
 
@@ -15,5 +16,6 @@ public interface VendasRepository extends JpaRepository<VendasModel, Long> {
     @Query("SELECT MAX(v.dataVenda) FROM VendasModel v")
     LocalDateTime buscarUltimaVenda();
 
-
+    @Query("SELECT SUM(iv.quantidade) FROM ItemVenda iv")
+    Long somarQuantidadePorVenda();
 }
