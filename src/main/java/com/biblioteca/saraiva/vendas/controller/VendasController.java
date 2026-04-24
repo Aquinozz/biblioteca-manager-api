@@ -49,7 +49,7 @@ public class VendasController {
             @RequestParam (required = false) @DateTimeFormat(pattern = DataUtils.DATA_TIME_PATTERN)LocalDateTime inicio,
 
             @Parameter(
-                    description = "Data inicial (dd/MM/yyyy HH:mm:ss)",
+                    description = "Data final (dd/MM/yyyy HH:mm:ss)",
                     example = "01/01/2026 01:11:00",
                     schema = @Schema(type = "string")
             )
