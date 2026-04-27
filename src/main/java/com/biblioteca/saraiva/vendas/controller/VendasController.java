@@ -39,35 +39,44 @@ public class VendasController {
     }
 
     @Operation(summary = "Lista todas as vendas realizadas")
-    @GetMapping
-    public ResponseEntity <List<VendasModel>> listarVendas(
+    @GetMapping(path = {"", "/{id}"})
+    public ResponseEntity <?>  listarVendas(
             @Parameter(
-                    description = "Data inicial (dd/MM/yyyy HH:mm:ss)",
-                    example = "01/01/2026 00:00:00",
+                    description = "Data inicial (dd/MM/yyyy)",
+                    example = "01/01/2026",
                     schema = @Schema(type = "string")
             )
-            @RequestParam (required = false) @DateTimeFormat(pattern = DataUtils.DATA_TIME_PATTERN)LocalDateTime inicio,
+            @RequestParam (required = false) @DateTimeFormat(pattern = DataUtils.DATA_PATTERN)LocalDate inicio,
 
             @Parameter(
-                    description = "Data final (dd/MM/yyyy HH:mm:ss)",
-                    example = "01/01/2026 01:11:00",
+                    description = "Data final (dd/MM/yyyy)",
+                    example = "02/02/2026",
                     schema = @Schema(type = "string")
             )
-            @RequestParam (required = false) @DateTimeFormat (pattern = DataUtils.DATA_TIME_PATTERN) LocalDateTime fim
-            ){
+            @RequestParam (required = false) @DateTimeFormat (pattern = DataUtils.DATA_PATTERN) LocalDate fim,
 
-        List<VendasModel> venda;
+            @Parameter(description = "ID da venda")
+            @RequestParam(required = false) Long id
+
+    ){
+
+
+
+        if (id != null){
+            VendasModel vendaUnica = vendasService.buscarPorId(id);
+            return ResponseEntity.ok(vendaUnica);
+        }
 
         if (inicio != null && fim != null){
-            venda = vendasRepository.findByDataVendaBetween(inicio, fim);
-        }
-        else {
-            venda = vendasRepository.findAll();
+            List<VendasModel> vendas = vendasRepository.findByDataVendaBetween(inicio, fim);
+            return ResponseEntity.ok (vendas);
         }
 
 
 
-        return ResponseEntity.ok(venda);
+
+
+        return ResponseEntity.ok(vendasRepository.findAll());
     }
 
 

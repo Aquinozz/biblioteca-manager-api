@@ -31,7 +31,7 @@ public class DadosController {
     public void exportar(@RequestParam String formato, HttpServletResponse response) throws Exception {
         DadosResponse dados = dadosService.getDadosGerais();
 
-        if ("xml".equalsIgnoreCase(formato)) {
+        if ("xml".equalsIgnoreCase(formato) ) {
             response.setContentType("application/xml");
             response.setHeader("Content-Disposition", "attachment; filename=dados.xml");
 
