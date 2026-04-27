@@ -39,7 +39,7 @@ public class VendasController {
     }
 
     @Operation(summary = "Lista todas as vendas realizadas")
-    @GetMapping(path = {"", "/{id}"})
+    @GetMapping
     public ResponseEntity <?>  listarVendas(
             @Parameter(
                     description = "Data inicial (dd/MM/yyyy)",
@@ -78,7 +78,7 @@ public class VendasController {
 
         return ResponseEntity.ok(vendasRepository.findAll());
     }
-    
+
 
     @Operation(summary = "Cancela venda pelo id")
     @DeleteMapping ("/{id}")
