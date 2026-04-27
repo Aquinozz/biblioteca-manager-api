@@ -78,14 +78,7 @@ public class VendasController {
 
         return ResponseEntity.ok(vendasRepository.findAll());
     }
-
-
-    @Operation(summary = "Acha venda pelo Id")
-    @GetMapping("/{id}")
-    public ResponseEntity<VendasModel> buscarVenda(@PathVariable Long id) {
-        VendasModel venda = vendasService.buscarPorId(id);
-        return ResponseEntity.ok(venda);
-    }
+    
 
     @Operation(summary = "Cancela venda pelo id")
     @DeleteMapping ("/{id}")
