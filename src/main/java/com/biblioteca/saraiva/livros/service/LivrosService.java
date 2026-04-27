@@ -45,6 +45,7 @@ public class LivrosService {
     public List<LivrosModel> filtrar (String autor, String titulo, String categoria){
 
 
+
         if (autor != null) {
             return livrosRepository.findByAutorContainingIgnoreCase(autor);
         }

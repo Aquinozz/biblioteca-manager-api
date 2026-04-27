@@ -74,8 +74,6 @@ public class VendasController {
 
 
 
-
-
         return ResponseEntity.ok(vendasRepository.findAll());
     }
 

@@ -22,26 +22,27 @@ public class LivrosController {
     public LivrosController(LivrosService livrosService) {
         this.livrosService = livrosService;
     }
-
-
-    @Operation(summary = "Acha livro pelo Id")
-    @GetMapping("/{id}")
-    public ResponseEntity<LivrosModel> buscarLivro(@PathVariable Long id) {
-        LivrosModel livro = livrosService.buscarPorId(id);
-        return ResponseEntity.ok(livro);
-    }
+1
 
 
     @Operation(summary = "Lista todos os livros cadastrados ou por categoria, autor e titulo")
     @GetMapping
-    public ResponseEntity <List<LivrosModel>> listarLivros(
+    public ResponseEntity <?> listarLivros(
             @RequestParam (required = false) String autor,
             @RequestParam (required = false) String titulo,
-            @RequestParam (required = false) String categoria
+            @RequestParam (required = false) String categoria,
+            @RequestParam (required = false) Long id
             )
     {
 
+        if (id != null){
+            LivrosModel livroId = livrosService.buscarPorId(id);
+            return ResponseEntity.ok(livroId);
+         }
+
+
         List<LivrosModel> livros = livrosService.filtrar(autor, titulo, categoria);
+
         return ResponseEntity.ok(livros);
     }
 
