@@ -68,7 +68,7 @@ public class DadosService {
                 "<p>Total de Vendas: " + dados.getTotalVendas() + "</p>" +
                 "<p>Data: " + dados.getUltimoRegistro().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</p>" +
                 "<p>Ticket Médio: R$ " + String.format("%.2f", dados.getTicketMedio()) + "</p>" +
-                "<p> Total de livros vendidos: " + dados.getLivrosVendidos() + "</p>" +
+                "<p> Total de livros vendidos: " + dados.getTotalVendas() + "</p>" +
                 "</body></html>";
     }
 }

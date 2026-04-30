@@ -2,9 +2,12 @@ package com.biblioteca.saraiva.dados.dto;
 
 import com.biblioteca.saraiva.vendas.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class DadosResponse {
 
     private Double faturamentoTotal;
@@ -25,21 +28,5 @@ public class DadosResponse {
     }
 
 
-
-    public Long getLivrosVendidos() {return totalLivros;}
-
-    public Double getFaturamentoTotal() {
-        return faturamentoTotal;
-    }
-
-    public Long getTotalVendas() {
-        return totalVendas;
-    }
-
-    public Double getTicketMedio() {
-        return ticketMedio;
-    }
-
-    public LocalDateTime getUltimoRegistro() {return ultimoRegistro;}
 
 }

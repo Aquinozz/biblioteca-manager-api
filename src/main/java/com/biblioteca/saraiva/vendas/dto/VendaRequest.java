@@ -1,8 +1,14 @@
 package com.biblioteca.saraiva.vendas.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
+
+
+@Getter
+@Setter
 
 @Schema(description = "Dados para realizar uma venda")
 public class VendaRequest {
@@ -12,19 +18,5 @@ public class VendaRequest {
 
     private List<ItemRequest> itens;
 
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
 
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public List<ItemRequest> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemRequest> itens) {
-        this.itens = itens;
-    }
 }

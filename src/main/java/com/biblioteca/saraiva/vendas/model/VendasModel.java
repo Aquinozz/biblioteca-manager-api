@@ -21,7 +21,6 @@ import java.util.List;
 @Getter
 @Setter
 
-
 @Entity
 @Table(name = "vendas")
 public class VendasModel {
@@ -48,8 +47,6 @@ public class VendasModel {
     public void prePersist() {
         this.dataVenda = LocalDateTime.now();
     }
-
-
 
 
 }
