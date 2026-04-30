@@ -4,6 +4,7 @@ import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
+import com.biblioteca.saraiva.vendas.enums.EnumVenda;
 import com.biblioteca.saraiva.vendas.model.ItemVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
@@ -30,12 +31,15 @@ public class VendasService {
 
 
 
-
     public VendasModel buscarPorId(Long id) {
         VendasModel vendas = vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
 
         return vendas;
+    }
+
+    public List<VendasModel> buscarPorStatus(EnumVenda status){
+        return vendasRepository.findByStatus(status);
     }
 
     @Transactional
@@ -51,7 +55,7 @@ public class VendasService {
             );
         }
 
-        vendasRepository.delete(venda);
+        venda.setStatus(EnumVenda.CANCELADA);
     }
 
 
@@ -116,6 +120,7 @@ public class VendasService {
 
         venda.setItens(itensVenda);
         venda.setValorTotal(totalVenda);
+        venda.setStatus(EnumVenda.REALIZADA);
 
 
         //Salva tudo atualizado de uma vez só

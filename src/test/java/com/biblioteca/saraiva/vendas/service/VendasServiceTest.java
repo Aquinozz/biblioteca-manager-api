@@ -60,6 +60,7 @@ class VendasServiceTest {
 
     }
 
+
     private LivrosModel criarLivro() {
         LivrosModel livro = new LivrosModel();
         livro.setTitulo("Livro Teste");

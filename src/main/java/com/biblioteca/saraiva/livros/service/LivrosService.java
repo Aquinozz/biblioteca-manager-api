@@ -3,6 +3,8 @@ package com.biblioteca.saraiva.livros.service;
 
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
+import com.biblioteca.saraiva.vendas.enums.EnumVenda;
+import com.biblioteca.saraiva.vendas.model.VendasModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

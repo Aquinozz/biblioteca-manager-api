@@ -3,6 +3,7 @@ package com.biblioteca.saraiva.vendas.controller;
 
 
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
+import com.biblioteca.saraiva.vendas.enums.EnumVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import com.biblioteca.saraiva.vendas.service.VendasService;
@@ -56,15 +57,23 @@ public class VendasController {
             @RequestParam (required = false) @DateTimeFormat (pattern = DataUtils.DATA_PATTERN) LocalDate fim,
 
             @Parameter(description = "ID da venda")
-            @RequestParam(required = false) Long id
+            @RequestParam(required = false) Long id,
+
+
+            @RequestParam (required = false) EnumVenda status
 
     ){
 
 
 
+        if (status != null){
+            List<VendasModel> venda = vendasService.buscarPorStatus(status);
+            return ResponseEntity.ok(venda);
+        }
+
         if (id != null){
-            VendasModel vendaUnica = vendasService.buscarPorId(id);
-            return ResponseEntity.ok(vendaUnica);
+            VendasModel venda = vendasService.buscarPorId(id);
+            return ResponseEntity.ok(venda);
         }
 
         if (inicio != null && fim != null){

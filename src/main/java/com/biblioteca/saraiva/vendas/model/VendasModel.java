@@ -1,6 +1,7 @@
 package com.biblioteca.saraiva.vendas.model;
 
 
+import com.biblioteca.saraiva.vendas.enums.EnumVenda;
 import com.biblioteca.saraiva.vendas.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +43,9 @@ public class VendasModel {
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemVenda> itens = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private EnumVenda status;
 
     @PrePersist
     public void prePersist() {

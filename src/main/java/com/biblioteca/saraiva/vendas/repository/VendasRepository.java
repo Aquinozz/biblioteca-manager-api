@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.vendas.repository;
 
+import com.biblioteca.saraiva.vendas.enums.EnumVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,8 @@ public interface VendasRepository extends JpaRepository<VendasModel, Long> {
             @Param("inicio") LocalDate inicio,
             @Param("fim") LocalDate fim
     );
+
+    List<VendasModel> findByStatus (EnumVenda status);
 
 
     @Query("SELECT MAX(v.dataVenda) FROM VendasModel v")
