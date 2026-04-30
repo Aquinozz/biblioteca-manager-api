@@ -15,6 +15,7 @@ public class DadosResponse {
     @JsonFormat(pattern = DataUtils.DATA_TIME_PATTERN)
     private LocalDateTime ultimoRegistro;
 
+
     public DadosResponse(Double faturamentoTotal, Long totalVendas, Double ticketMedio, LocalDateTime ultimoRegistro, Long totalLivros) {
         this.faturamentoTotal = faturamentoTotal;
         this.totalVendas = totalVendas;
@@ -22,6 +23,8 @@ public class DadosResponse {
         this.ultimoRegistro = ultimoRegistro;
         this.totalLivros = totalLivros;
     }
+
+
 
     public Long getLivrosVendidos() {return totalLivros;}
 

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +16,11 @@ import java.util.List;
 
 
 @Schema(description = "Modelo de vendas")
+
+// getters e setters
+@Getter
+@Setter
+
 
 @Entity
 @Table(name = "vendas")
@@ -41,46 +49,7 @@ public class VendasModel {
         this.dataVenda = LocalDateTime.now();
     }
 
-    // getters e setters
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public LocalDateTime getDataVenda() {
-        return dataVenda;
-    }
-
-    public void setDataVenda(LocalDateTime dataVenda) {
-        this.dataVenda = dataVenda;
-    }
-
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public List<ItemVenda> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemVenda> itens) {
-        this.itens = itens;
-    }
 }

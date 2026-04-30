@@ -4,12 +4,8 @@ import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.service.LivrosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.http.ResponseEntity;
-
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Tag(name = "Livros", description = "Operações relacionadas aos livros")
@@ -22,7 +18,7 @@ public class LivrosController {
     public LivrosController(LivrosService livrosService) {
         this.livrosService = livrosService;
     }
-1
+
 
 
     @Operation(summary = "Lista todos os livros cadastrados ou por categoria, autor e titulo")

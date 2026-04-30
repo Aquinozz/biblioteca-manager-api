@@ -3,8 +3,14 @@ package com.biblioteca.saraiva.vendas.model;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+
+// getters e setters
+@Getter
+@Setter
 
 @Entity
 @Table(name = "item_venda")
@@ -28,46 +34,7 @@ public class ItemVenda {
     private Integer quantidade;
     private BigDecimal precoUnitario;
 
-    // getters e setters
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public VendasModel getVenda() {
-        return venda;
-    }
-
-    public void setVenda(VendasModel venda) {
-        this.venda = venda;
-    }
-
-    public LivrosModel getLivro() {
-        return livro;
-    }
-
-    public void setLivro(LivrosModel livro) {
-        this.livro = livro;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public BigDecimal getPrecoUnitario() {
-        return precoUnitario;
-    }
-
-    public void setPrecoUnitario(BigDecimal precoUnitario) {
-        this.precoUnitario = precoUnitario;
-    }
 }
