@@ -1,9 +1,11 @@
 package com.biblioteca.saraiva.vendas.service;
 
+import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
+import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
@@ -40,7 +42,7 @@ class VendasServiceTest {
 
         VendaRequest venda = new VendaRequest();
 
-        venda.setFormaPagamento("PIX");
+        venda.setFormaPagamento(EnumPagamentoVenda.PIX);
         venda.setItens(List.of(item));
 
         VendasModel resultado = vendasService.vender(venda);
@@ -52,7 +54,7 @@ class VendasServiceTest {
         }
 
         assertNotNull(resultado);
-        assertEquals("PIX", resultado.getFormaPagamento());
+        assertEquals(EnumPagamentoVenda.PIX, resultado.getFormaPagamento());
         assertFalse(resultado.getItens().isEmpty());
         assertEquals(new BigDecimal("1200.00"), resultado.getValorTotal());
 
@@ -67,7 +69,7 @@ class VendasServiceTest {
         livro.setPreco(BigDecimal.valueOf(50));
         livro.setAnoCriacao(2010);
         livro.setAutor("Fulano");
-        livro.setCategoria("aventura");
+        livro.setCategoria(EnumLivro.ACAO);
         livro.setDescricao("Descrição");
         livro.setQuantidade(100);
         return livro;

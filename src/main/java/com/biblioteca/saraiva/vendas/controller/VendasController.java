@@ -61,6 +61,7 @@ public class VendasController {
             @Parameter (description = "Achar por status de venda")
             @RequestParam (required = false) EnumStatusVenda status,
 
+            @Parameter (description = "Tipo de pagamento")
             @RequestParam (required = false)EnumPagamentoVenda pagamento
 
             ){

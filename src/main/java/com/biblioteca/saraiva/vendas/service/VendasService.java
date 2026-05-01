@@ -47,10 +47,15 @@ public class VendasService {
         return vendasRepository.findByStatus(status);
     }
 
+
     @Transactional
     public void cancelarVenda(Long id){
         VendasModel venda = vendasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrado"));
+
+        if (venda.getStatus() == EnumStatusVenda.CANCELADA){
+            throw new RuntimeException("ERRO venda já cancelada");
+        }
 
         for (ItemVenda item : venda.getItens()) {
             LivrosModel livro = item.getLivro();
