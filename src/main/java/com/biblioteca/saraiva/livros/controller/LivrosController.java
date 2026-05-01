@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.livros.controller;
 
+import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.service.LivrosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +27,7 @@ public class LivrosController {
     public ResponseEntity <?> listarLivros(
             @RequestParam (required = false) String autor,
             @RequestParam (required = false) String titulo,
-            @RequestParam (required = false) String categoria,
+            @RequestParam (required = false) EnumLivro categoria,
             @RequestParam (required = false) Long id
             )
     {

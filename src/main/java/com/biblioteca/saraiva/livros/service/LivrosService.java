@@ -1,10 +1,9 @@
 package com.biblioteca.saraiva.livros.service;
 
 
+import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
-import com.biblioteca.saraiva.vendas.enums.EnumVenda;
-import com.biblioteca.saraiva.vendas.model.VendasModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,7 @@ public class LivrosService {
     }
 
 
-    public List<LivrosModel> filtrar (String autor, String titulo, String categoria){
+    public List<LivrosModel> filtrar (String autor, String titulo, EnumLivro categoria){
 
 
 
@@ -57,11 +56,17 @@ public class LivrosService {
         }
 
         if (categoria != null){
-            return livrosRepository.findByCategoriaContainingIgnoreCase(categoria);
+           return livrosRepository.findByCategoria(categoria);
         }
 
         return livrosRepository.findAll();
     }
+
+
+    public List<LivrosModel> buscarPorCategoria(EnumLivro categoria){
+        return livrosRepository.findByCategoria(categoria);
+    }
+
 
     public LivrosModel atualizar(Long id, LivrosModel dadosAtualizados){
 

@@ -1,6 +1,7 @@
 package com.biblioteca.saraiva.vendas.repository;
 
-import com.biblioteca.saraiva.vendas.enums.EnumVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumStatusVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,8 +22,9 @@ public interface VendasRepository extends JpaRepository<VendasModel, Long> {
             @Param("fim") LocalDate fim
     );
 
-    List<VendasModel> findByStatus (EnumVenda status);
+    List<VendasModel> findByStatus (EnumStatusVenda status);
 
+    List<VendasModel> findByFormaPagamento (EnumPagamentoVenda formaPagamento);
 
     @Query("SELECT MAX(v.dataVenda) FROM VendasModel v")
     LocalDateTime buscarUltimaVenda();

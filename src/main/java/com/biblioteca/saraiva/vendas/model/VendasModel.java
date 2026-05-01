@@ -1,7 +1,8 @@
 package com.biblioteca.saraiva.vendas.model;
 
 
-import com.biblioteca.saraiva.vendas.enums.EnumVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumStatusVenda;
 import com.biblioteca.saraiva.vendas.utils.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,13 +40,15 @@ public class VendasModel {
     private BigDecimal valorTotal;
 
     @Column(name = "forma_pagamento", nullable = false)
-    private String formaPagamento;
+    @Enumerated (EnumType.STRING)
+    private EnumPagamentoVenda formaPagamento;
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemVenda> itens = new ArrayList<>();
 
+    @Column (name = "Status da venda", nullable = false)
     @Enumerated(EnumType.STRING)
-    private EnumVenda status;
+    private EnumStatusVenda status;
 
     @PrePersist
     public void prePersist() {

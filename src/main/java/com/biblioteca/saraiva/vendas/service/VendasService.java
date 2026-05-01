@@ -4,7 +4,8 @@ import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
-import com.biblioteca.saraiva.vendas.enums.EnumVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumStatusVenda;
 import com.biblioteca.saraiva.vendas.model.ItemVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
@@ -38,7 +39,11 @@ public class VendasService {
         return vendas;
     }
 
-    public List<VendasModel> buscarPorStatus(EnumVenda status){
+    public List<VendasModel> buscarPorPagamento (EnumPagamentoVenda pagamento){
+        return vendasRepository.findByFormaPagamento(pagamento);
+    }
+
+    public List<VendasModel> buscarPorStatus(EnumStatusVenda status){
         return vendasRepository.findByStatus(status);
     }
 
@@ -55,7 +60,7 @@ public class VendasService {
             );
         }
 
-        venda.setStatus(EnumVenda.CANCELADA);
+        venda.setStatus(EnumStatusVenda.CANCELADA);
     }
 
 
@@ -120,7 +125,7 @@ public class VendasService {
 
         venda.setItens(itensVenda);
         venda.setValorTotal(totalVenda);
-        venda.setStatus(EnumVenda.REALIZADA);
+        venda.setStatus(EnumStatusVenda.REALIZADA);
 
 
         //Salva tudo atualizado de uma vez só

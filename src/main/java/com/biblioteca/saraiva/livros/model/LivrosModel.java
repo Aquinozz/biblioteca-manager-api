@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.livros.model;
 
+import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,7 +34,8 @@ public class LivrosModel {
     private String descricao;
 
     @Column(nullable = false)
-    private String categoria;
+    @Enumerated(EnumType.STRING)
+    private EnumLivro categoria;
 
     @Column(nullable = false)
     private Integer anoCriacao;

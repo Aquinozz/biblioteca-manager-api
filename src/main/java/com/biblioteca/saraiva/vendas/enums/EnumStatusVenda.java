@@ -2,15 +2,13 @@ package com.biblioteca.saraiva.vendas.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
 @AllArgsConstructor
-public enum  EnumVenda {
+public enum EnumStatusVenda {
 
 
     CANCELADA ("C", "CANCELADA"),
@@ -20,12 +18,12 @@ public enum  EnumVenda {
     private  String descricao;
 
     @JsonCreator
-    public static EnumVenda situacaoVenda(String codigo){
+    public static EnumStatusVenda situacaoVenda(String codigo){
         if (codigo == null) {
             throw new IllegalArgumentException("Código da venda não pode ser null");
         }
 
-        for (EnumVenda status : values()) {
+        for (EnumStatusVenda status : values()) {
             if (status.codigo.equalsIgnoreCase(codigo)) {
                 return status;
             }

@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.vendas.dto;
 
+import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,9 @@ import java.util.List;
 @Schema(description = "Dados para realizar uma venda")
 public class VendaRequest {
 
+
     @Schema(example = "PIX")
-    private String formaPagamento;
+    private EnumPagamentoVenda formaPagamento;
 
     private List<ItemRequest> itens;
 
