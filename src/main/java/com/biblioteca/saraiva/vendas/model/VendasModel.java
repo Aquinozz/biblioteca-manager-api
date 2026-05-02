@@ -39,6 +39,12 @@ public class VendasModel {
     @Column(name = "valor_total", nullable = false)
     private BigDecimal valorTotal;
 
+    @Column (name = "numero_parcelas")
+    private Integer numeroParcelas;
+
+    @Column (name = "valor_parcelas")
+    private BigDecimal valorParcelas;
+
     @Column(name = "forma_pagamento", nullable = false)
     @Enumerated (EnumType.STRING)
     private EnumPagamentoVenda formaPagamento;

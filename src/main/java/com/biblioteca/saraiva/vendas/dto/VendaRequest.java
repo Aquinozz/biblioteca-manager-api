@@ -20,5 +20,6 @@ public class VendaRequest {
 
     private List<ItemRequest> itens;
 
+    private Integer numeroParcelas;
 
 }

@@ -44,6 +44,7 @@ class VendasServiceTest {
 
         venda.setFormaPagamento(EnumPagamentoVenda.PIX);
         venda.setItens(List.of(item));
+        venda.setNumeroParcelas(0);
 
         VendasModel resultado = vendasService.vender(venda);
 

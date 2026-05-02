@@ -12,6 +12,7 @@ import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +113,7 @@ public class VendasService {
             //Atualiza o estoque
             livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
 
-            //Criar item de benda
+            //Criar item de venda
             ItemVenda item = new ItemVenda();
             item.setLivro(livro);
             item.setVenda(venda);
@@ -128,6 +129,24 @@ public class VendasService {
 
         }
 
+
+        int parcelas = (request.getNumeroParcelas() == null || request.getNumeroParcelas() <= 0)
+                ? 1
+                : request.getNumeroParcelas();
+
+
+        BigDecimal valorParcela = totalVenda.divide(
+                BigDecimal.valueOf(parcelas),
+                2,
+                RoundingMode.HALF_UP
+        );
+
+        if (parcelas > 1 && request.getFormaPagamento() != EnumPagamentoVenda.CREDITO) {
+            throw new RuntimeException("Parcelamento só permitido no crédito");
+        }
+
+        venda.setNumeroParcelas(parcelas);
+        venda.setValorParcelas(valorParcela);
         venda.setItens(itensVenda);
         venda.setValorTotal(totalVenda);
         venda.setStatus(EnumStatusVenda.REALIZADA);
