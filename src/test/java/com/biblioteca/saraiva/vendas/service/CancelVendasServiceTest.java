@@ -6,13 +6,11 @@ import com.biblioteca.saraiva.livros.repository.LivrosRepository;
 import com.biblioteca.saraiva.vendas.dto.ItemRequest;
 import com.biblioteca.saraiva.vendas.dto.VendaRequest;
 import com.biblioteca.saraiva.vendas.enums.EnumPagamentoVenda;
+import com.biblioteca.saraiva.vendas.enums.EnumStatusVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,8 +18,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("test")
-class VendasServiceTest {
+class CancelVendasServiceTest {
+
 
 
     @Autowired
@@ -30,8 +28,22 @@ class VendasServiceTest {
     @Autowired
     LivrosRepository livrosRepository;
 
+
     @Test
-    void vender() {
+    void cancelarVenda() {
+
+        VendasModel venda = vender();
+
+        vendasService.cancelarVenda(venda.getId());
+
+        VendasModel vendaAtualizada = vendasService.buscarPorId(venda.getId());
+
+        assertEquals(EnumStatusVenda.CANCELADA, vendaAtualizada.getStatus());
+
+    }
+
+
+    VendasModel vender() {
 
 
         LivrosModel livro = livrosRepository.save(criarLivro());
@@ -68,6 +80,8 @@ class VendasServiceTest {
         int esperadoEstoque = quantidadeInicial - item.getQuantidade();
 
         assertEquals(esperadoEstoque, livroAtualizado.getQuantidade());
+
+        return resultado;
     }
 
 
@@ -82,4 +96,5 @@ class VendasServiceTest {
         livro.setQuantidade(100);
         return livro;
     }
+
 }
