@@ -62,10 +62,7 @@ public class LivrosService {
         return livrosRepository.findAll();
     }
 
-
-    public List<LivrosModel> buscarPorCategoria(EnumLivro categoria){
-        return livrosRepository.findByCategoria(categoria);
-    }
+    
 
 
     public LivrosModel atualizar(Long id, LivrosModel dadosAtualizados){
