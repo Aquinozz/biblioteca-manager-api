@@ -66,7 +66,6 @@ public class LivrosService {
 
 
     public LivrosModel atualizar(Long id, LivrosModel dadosAtualizados){
-
         LivrosModel livro = livrosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
