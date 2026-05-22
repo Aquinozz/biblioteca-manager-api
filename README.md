@@ -49,7 +49,7 @@ A API utiliza autenticação baseada em **JWT (Bearer Token)**.
 4. Cole o token no formato:
 
 ```
-Bearer SEU_TOKEN_AQUI
+Bearer SEU_TOKEN_AQUI (Dependendo do swagger não é necessário escrever Bearer)
 ```
 
 ---
