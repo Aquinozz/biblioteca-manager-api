@@ -10,6 +10,7 @@ import com.biblioteca.saraiva.vendas.model.ItemVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class VendasService {
 
@@ -66,6 +68,7 @@ public class VendasService {
             );
         }
 
+        log.info("Venda cancelada com sucesso");
         venda.setStatus(EnumStatusVenda.CANCELADA);
     }
 
@@ -155,6 +158,8 @@ public class VendasService {
         //Salva tudo atualizado de uma vez só
         livrosRepository.saveAll(livrosNoBanco);
 
+
+        log.info("Venda realizada com sucesso");
         // Salva a venda
         return vendasRepository.save(venda);
     }

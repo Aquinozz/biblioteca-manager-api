@@ -12,6 +12,7 @@ import com.biblioteca.saraiva.users.models.Users;
 import com.biblioteca.saraiva.users.repository.RolesRepository;
 import com.biblioteca.saraiva.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -56,6 +58,8 @@ public class AuthenticationService {
                         .roles(Set.of(role))
                         .build()
         );
+
+        log.info("Usuário registrado com sucesso");
     }
 
     public TokenResponseDto login (LoginRequestDto dto) throws Exception {
@@ -63,6 +67,7 @@ public class AuthenticationService {
             Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha()));
             String token = tokenProvider.gerarToken(authentication);
 
+            log.info("Login realizado com sucesso");
             return new TokenResponseDto(token,expiration );
 
         } catch (BadCredentialsException e) {

@@ -2,10 +2,12 @@ package com.biblioteca.saraiva.dados.service;
 
 import com.biblioteca.saraiva.dados.dto.DadosResponse;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
 public class DadosService {
 
@@ -62,6 +64,9 @@ public class DadosService {
     }
 
     public String gerarHtml(DadosResponse dados) {
+
+        log.info("Html de dados gerado");
+
         return "<html><body>" +
                 "<h1>Relatorio de Vendas</h1>" +
                 "<p>Faturamento: R$ " + String.format("%.2f", dados.getFaturamentoTotal()) + "</p>" +

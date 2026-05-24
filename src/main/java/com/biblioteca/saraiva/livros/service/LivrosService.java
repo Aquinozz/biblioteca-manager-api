@@ -4,11 +4,13 @@ package com.biblioteca.saraiva.livros.service;
 import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class LivrosService {
 
@@ -29,7 +31,7 @@ public class LivrosService {
     public LivrosModel salvar(LivrosModel livro) {
 
 
-
+        log.info("Livro criado com sucesso");
         return livrosRepository.save(livro);
     }
 
@@ -39,6 +41,7 @@ public class LivrosService {
         LivrosModel livro = livrosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
+        log.info("Livro deletado com sucesso");
         livrosRepository.delete(livro);
     }
 
@@ -87,7 +90,7 @@ public class LivrosService {
         if (dadosAtualizados.getQuantidade() != null) {
             livro.setQuantidade(dadosAtualizados.getQuantidade());
         }
-
+        log.info("Livro atualizado com sucesso");
         return livrosRepository.save(livro);
     }
 }
