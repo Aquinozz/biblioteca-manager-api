@@ -12,6 +12,7 @@ API REST para gerenciamento de **livros, vendas e dados estatísticos**, com aut
 * Spring Data JPA
 * H2 Database
 * Swagger (OpenAPI)
+* Slf4j
 
 ---
 
