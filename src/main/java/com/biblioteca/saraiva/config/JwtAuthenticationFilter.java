@@ -22,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
+    private final TokenBlacklist tokenBlacklist;
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest request,
@@ -46,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String token = authorizationHeader.substring(7);
 
-            if (tokenProvider.isTokenValid(token)) {
+            if (tokenProvider.isTokenValid(token) && !tokenBlacklist.isInvalid(token)) {
 
                 String username = tokenProvider.getUsername(token);
 

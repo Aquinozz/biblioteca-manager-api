@@ -50,6 +50,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
 
+                                .requestMatchers("/auth/logout").authenticated()
+
                                 .requestMatchers(HttpMethod.POST, "/livros/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/livros/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/livros/**").hasRole("ADMIN")
