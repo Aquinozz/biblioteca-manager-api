@@ -3,13 +3,16 @@ package com.biblioteca.saraiva.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class TokenProvider {
 
@@ -19,23 +22,29 @@ public class TokenProvider {
     @Value("${jwt.secret}")
     private String key;
 
-
     //gerar token
-    public String gerarToken (Authentication authentication){
-       UserDetails user =  (UserDetails)authentication.getPrincipal();
-       return buildToken(user.getUsername());
+    public String gerarToken(Authentication authentication){
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+
+        log.info("Gerando token para usuário: {}", user.getUsername());
+
+        return buildToken(user.getUsername());
     }
 
     private String buildToken(String username){
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationTime);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .subject(username)
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(getSigningKey())
                 .compact();
+
+        log.debug("Token gerado com sucesso para usuário: {}", username);
+
+        return token;
     }
 
     private SecretKey getSigningKey() {
@@ -43,17 +52,22 @@ public class TokenProvider {
     }
 
     //validar token
-    public Boolean isTokenValid (String token){
+    public Boolean isTokenValid(String token){
         try{
             getClaims(token);
+
+            log.debug("Token válido");
+
             return true;
         } catch (Exception e){
-            return false;
 
+            log.warn("Token inválido: {}", e.getMessage());
+
+            return false;
         }
     }
 
-    private Claims getClaims (String token){
+    private Claims getClaims(String token){
         //validar assinatura
         //validar expiracao
 
@@ -65,10 +79,11 @@ public class TokenProvider {
     }
 
     //extrair infos do token
+    public String getUsername(String token){
+        String username = getClaims(token).getSubject();
 
-    public String getUsername (String token){
-        return getClaims(token).getSubject();
+        log.debug("Username extraído do token: {}", username);
+
+        return username;
     }
-
 }
-

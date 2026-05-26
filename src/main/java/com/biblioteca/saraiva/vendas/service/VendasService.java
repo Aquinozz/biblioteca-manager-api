@@ -68,7 +68,7 @@ public class VendasService {
             );
         }
 
-        log.info("Venda cancelada com sucesso");
+        log.info("Venda " + id + " cancelada com sucesso");
         venda.setStatus(EnumStatusVenda.CANCELADA);
     }
 
@@ -78,6 +78,10 @@ public class VendasService {
 
     @Transactional
     public VendasModel vender(VendaRequest request) {
+
+        log.info("Iniciando venda - formaPagamento: {}, quantidadeItens: {}",
+                request.getFormaPagamento(),
+                request.getItens().size());
 
         //Pegar todos os IDs de livros p depois buscar de uma vez só
         List<Long> idsLivros = request.getItens().stream() //".stream()" ele abre um fluxo dos itens da requisição
@@ -91,7 +95,6 @@ public class VendasService {
         Map<Long, LivrosModel> mapaLivros = livrosNoBanco.stream() //usando a query de cima
                 .collect(Collectors.toMap(LivrosModel::getId, livro -> livro));
 
-
         VendasModel venda = new VendasModel();
         venda.setFormaPagamento(request.getFormaPagamento());
 
@@ -103,18 +106,24 @@ public class VendasService {
 
             LivrosModel livro = mapaLivros.get(itemReq.getLivroId());
 
-
             if (livro == null) {
+                log.error("Livro não encontrado - ID: {}", itemReq.getLivroId());
                 throw new RuntimeException("Livro ID" + itemReq.getLivroId() + " não encontrado");
-
             }
 
             if (livro.getQuantidade() < itemReq.getQuantidade()) {
+                log.warn("Estoque insuficiente - livro: {}, solicitado: {}, disponível: {}",
+                        livro.getTitulo(),
+                        itemReq.getQuantidade(),
+                        livro.getQuantidade());
+
                 throw new RuntimeException("Estoque insuficiente para o livro: " + livro.getTitulo());
             }
 
             //Atualiza o estoque
-            livro.setQuantidade(livro.getQuantidade() - itemReq.getQuantidade());
+            livro.setQuantidade(
+                    livro.getQuantidade() - itemReq.getQuantidade()
+            );
 
             //Criar item de venda
             ItemVenda item = new ItemVenda();
@@ -127,16 +136,19 @@ public class VendasService {
             totalVenda = totalVenda.add(subtotal);
 
             itensVenda.add(item);
-
-
-
         }
-
 
         int parcelas = (request.getNumeroParcelas() == null || request.getNumeroParcelas() <= 0)
                 ? 1
                 : request.getNumeroParcelas();
 
+        if (parcelas > 1 && request.getFormaPagamento() != EnumPagamentoVenda.CREDITO) {
+            log.warn("Tentativa inválida de parcelamento - formaPagamento: {}, parcelas: {}",
+                    request.getFormaPagamento(),
+                    parcelas);
+
+            throw new RuntimeException("Parcelamento só permitido no crédito");
+        }
 
         BigDecimal valorParcela = totalVenda.divide(
                 BigDecimal.valueOf(parcelas),
@@ -144,22 +156,20 @@ public class VendasService {
                 RoundingMode.HALF_UP
         );
 
-        if (parcelas > 1 && request.getFormaPagamento() != EnumPagamentoVenda.CREDITO) {
-            throw new RuntimeException("Parcelamento só permitido no crédito");
-        }
-
         venda.setNumeroParcelas(parcelas);
         venda.setValorParcelas(valorParcela);
         venda.setItens(itensVenda);
         venda.setValorTotal(totalVenda);
         venda.setStatus(EnumStatusVenda.REALIZADA);
 
-
         //Salva tudo atualizado de uma vez só
         livrosRepository.saveAll(livrosNoBanco);
 
+        log.info("Venda realizada com sucesso - total: {}, parcelas: {}, valorParcela: {}",
+                totalVenda,
+                parcelas,
+                valorParcela);
 
-        log.info("Venda realizada com sucesso");
         // Salva a venda
         return vendasRepository.save(venda);
     }

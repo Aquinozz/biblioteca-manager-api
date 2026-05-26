@@ -36,19 +36,25 @@ public class AuthenticationService {
 
     public void register(RegisterRequestDto registerRequestDto) throws BadRequestException {
 
+        log.info("Tentando registrar usuário com email: {}", registerRequestDto.getEmail());
+
         Users user = userRepository.findByEmail(registerRequestDto.getEmail())
                 .orElse(null);
 
         if (user != null) {
+            log.warn("Tentativa de registro com email já existente: {}", registerRequestDto.getEmail());
             throw new BadRequestException("Usuário já cadastrado");
         }
 
         RolesEntity role = rolesRepository.findByNome(RolesType.ROLE_LEITOR.name())
-                .orElseGet(() -> rolesRepository.save(
-                        RolesEntity.builder()
-                                .nome(RolesType.ROLE_LEITOR.name())
-                                .build()
-                ));
+                .orElseGet(() -> {
+                    log.info("Role ROLE_LEITOR não encontrada, criando nova");
+                    return rolesRepository.save(
+                            RolesEntity.builder()
+                                    .nome(RolesType.ROLE_LEITOR.name())
+                                    .build()
+                    );
+                });
 
         userRepository.save(
                 Users.builder()
@@ -59,22 +65,34 @@ public class AuthenticationService {
                         .build()
         );
 
-        log.info("Usuário registrado com sucesso");
+        log.info("Usuário registrado com sucesso: {}", registerRequestDto.getEmail());
     }
 
-    public TokenResponseDto login (LoginRequestDto dto) throws Exception {
-        try{
-            Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha()));
+    public TokenResponseDto login(LoginRequestDto dto) throws Exception {
+
+        log.info("Tentativa de login para email: {}", dto.getEmail());
+
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha())
+            );
+
             String token = tokenProvider.gerarToken(authentication);
 
-            log.info("Login realizado com sucesso");
-            return new TokenResponseDto(token,expiration );
+            log.info("Login realizado com sucesso para: {}", dto.getEmail());
+
+            return new TokenResponseDto(token, expiration);
 
         } catch (BadCredentialsException e) {
 
+            log.warn("Falha no login (credenciais inválidas) para: {}", dto.getEmail());
+
             throw new BadRequestException("credenciais inválidas");
-        }
-        catch ( Exception e){
+
+        } catch (Exception e) {
+
+            log.error("Erro inesperado no login para: {}", dto.getEmail(), e);
+
             throw e;
         }
     }
