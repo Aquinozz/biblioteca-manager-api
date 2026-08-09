@@ -1,10 +1,10 @@
-# 📚 API Biblioteca manager
+# 📚 Biblioteca Manager API
 
-API REST para gerenciamento de **livros, vendas e dados estatísticos**, com autenticação via JWT e controle de acesso por roles.
+REST API for managing **books, sales and statistical data**, with JWT authentication and role-based access control.
 
 ---
 
-## 🚀 Tecnologias
+## 🚀 Technologies
 
 * Java 21
 * Spring Boot
@@ -16,9 +16,9 @@ API REST para gerenciamento de **livros, vendas e dados estatísticos**, com aut
 
 ---
 
-## 🔐 Autenticação
+## 🔐 Authentication
 
-A API utiliza autenticação baseada em **JWT (Bearer Token)**.
+The API uses **JWT (Bearer Token)** based authentication.
 
 ### ▶️ Login
 
@@ -31,86 +31,86 @@ A API utiliza autenticação baseada em **JWT (Bearer Token)**.
 }
 ```
 
-**Resposta:**
+**Response:**
 
 ```json
 {
-  "token": "SEU_TOKEN_AQUI",
+  "token": "YOUR_TOKEN_HERE",
   "expiresIn": 900000
 }
 ```
 
 ---
 
-## 🔑 Como usar o token
+## 🔑 How to use the token
 
-1. Faça login no endpoint `/auth/login`
-2. Copie o token retornado
-3. No Swagger, clique em **Authorize 🔒**
-4. Cole o token no formato:
+1. Log in at the `/auth/login` endpoint
+2. Copy the returned token
+3. In Swagger, click on **Authorize 🔒**
+4. Paste the token in the format:
 
 ```
-Bearer SEU_TOKEN_AQUI (Dependendo do swagger não é necessário escrever Bearer)
+Bearer YOUR_TOKEN_HERE (Depending on the swagger version, writing "Bearer" is not necessary)
 ```
 
 ---
 
 ## 👥 Roles
 
-A API possui controle de acesso com duas roles:
+The API has access control with two roles:
 
 * `ROLE_ADMIN`
 * `ROLE_LEITOR`
 
-### 📌 Permissões
+### 📌 Permissions
 
 | Endpoint      | ADMIN | LEITOR |
 | ------------- | ----- | ------ |
-| Criar livro   | ✔️    | ❌      |
-| Listar livros | ✔️    | ✔️     |
-| Criar venda   | ✔️    | ❌     |
-| Deletar venda | ✔️    | ❌      |
+| Create book   | ✔️    | ❌      |
+| List books    | ✔️    | ✔️     |
+| Create sale   | ✔️    | ❌     |
+| Delete sale   | ✔️    | ❌      |
 
 ---
 
 ## 📘 Endpoints
 
-### 🔐 Autenticação
+### 🔐 Authentication
 
-* **POST** `/auth/register` → Registrar usuário
-* **POST** `/auth/login` → Realizar login
-
----
-
-### 📚 Livros
-
-* **GET** `/livros` → Listar livros
-* **POST** `/livros` → Criar livro
-* **PUT** `/livros/{id}` → Atualizar livro
-* **DELETE** `/livros/{id}` → Deletar livro
+* **POST** `/auth/register` → Register user
+* **POST** `/auth/login` → Log in
 
 ---
 
-### 💰 Vendas
+### 📚 Books
 
-* **GET** `/vendas` → Listar vendas
-* **POST** `/vendas` → Criar venda
-* **DELETE** `/vendas/{id}` → Cancelar venda
-
----
-
-### 📊 Dados
-
-* **GET** `/dados` → Resumo de vendas/lucro
-* **GET** `/dados/exportar` → Exportar dados (PDF/XML)
+* **GET** `/livros` → List books
+* **POST** `/livros` → Create book
+* **PUT** `/livros/{id}` → Update book
+* **DELETE** `/livros/{id}` → Delete book
 
 ---
 
-## 🛠️ Banco de Dados
+### 💰 Sales
 
-Banco em memória usando H2.
+* **GET** `/vendas` → List sales
+* **POST** `/vendas` → Create sale
+* **DELETE** `/vendas/{id}` → Cancel sale
 
-### Acesso:
+---
+
+### 📊 Data
+
+* **GET** `/dados` → Sales/profit summary
+* **GET** `/dados/exportar` → Export data (PDF/XML)
+
+---
+
+## 🛠️ Database
+
+In-memory database using H2.
+
+### Access:
 
 ```
 http://localhost:8080/h2-console
@@ -118,9 +118,9 @@ http://localhost:8080/h2-console
 
 ---
 
-## ⚙️ Usuário padrão
+## ⚙️ Default user
 
-Criado automaticamente ao iniciar a aplicação:
+Created automatically when the application starts:
 
 ```
 email: admin@email.com
@@ -129,7 +129,7 @@ senha: 123456
 
 ---
 
-## ▶️ Como executar
+## ▶️ How to run
 
 ```bash
 mvn spring-boot:run
@@ -137,9 +137,9 @@ mvn spring-boot:run
 
 ---
 
-## 📄 Documentação Swagger
+## 📄 Swagger Documentation
 
-Acesse:
+Access:
 
 ```
 http://localhost:8080/swagger-ui/index.html
@@ -147,16 +147,15 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
-## ⚠️ Observações
+## ⚠️ Notes
 
-* Todas as rotas (exceto `/auth/**`) exigem autenticação
-* Utilize sempre o prefixo `Bearer ` no token
-* Roles seguem o padrão `ROLE_`
-* Tokens expiram (faça login novamente se necessário)
+* All routes (except `/auth/**`) require authentication
+* Always use the `Bearer ` prefix in the token
+* Roles follow the `ROLE_` pattern
+* Tokens expire (log in again if necessary)
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 Murilo Aquino
-
