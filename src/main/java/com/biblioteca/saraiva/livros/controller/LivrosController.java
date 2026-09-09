@@ -5,6 +5,7 @@ import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.service.LivrosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,13 +13,11 @@ import java.util.List;
 @Tag(name = "Livros", description = "Operações relacionadas aos livros")
 @RestController
 @RequestMapping("/livros")
+@AllArgsConstructor
 public class LivrosController {
 
     private final LivrosService livrosService;
 
-    public LivrosController(LivrosService livrosService) {
-        this.livrosService = livrosService;
-    }
 
 
 

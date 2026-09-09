@@ -4,6 +4,7 @@ import com.biblioteca.saraiva.dados.dto.DadosResponse;
 import com.biblioteca.saraiva.dados.service.DadosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,13 +12,11 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "Dados", description = "Métricas e estatísticas do sistema de vendas")
 @RestController
 @RequestMapping("/dados")
+@AllArgsConstructor
 public class DadosController {
 
     private final DadosService dadosService;
 
-    public DadosController(DadosService dadosService){
-        this.dadosService = dadosService;
-    }
 
 
     @Operation(summary = "Retorna um resumo de dados sobre lucro e etc...")

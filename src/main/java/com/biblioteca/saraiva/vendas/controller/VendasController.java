@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,11 @@ import java.util.List;
 @Tag(name = "Vendas", description = "Operações relacionadas às vendas de livros")
 @RestController
 @RequestMapping("/vendas")
+@AllArgsConstructor
 public class VendasController {
 
 
-    @Autowired
     private VendasRepository vendasRepository;
-
     private final VendasService vendasService;
 
     public VendasController(VendasService vendasService) {
