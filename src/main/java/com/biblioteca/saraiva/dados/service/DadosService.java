@@ -41,7 +41,7 @@ public class DadosService {
 
         log.info("Get dados gerais realizado com sucesso");
 
-        return new DadosResponse(total, quantidade, ticket, ultimoRegistro, livrosVendidos);
+        return new DadosResponse(total, quantidade, ticket, livrosVendidos, ultimoRegistro);
     }
 
     public LocalDateTime getRegistro() {

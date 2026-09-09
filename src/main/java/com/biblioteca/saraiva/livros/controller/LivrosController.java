@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.livros.controller;
 
+import com.biblioteca.saraiva.livros.dto.LivroRequest;
 import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.service.LivrosService;
@@ -44,8 +45,8 @@ public class LivrosController {
 
     @Operation(summary = "Cria um novo livro")
     @PostMapping
-    public LivrosModel criarLivro(@RequestBody LivrosModel livro){
-        return livrosService.salvar(livro);
+    public LivrosModel criarLivro(@RequestBody LivroRequest req){
+        return livrosService.salvar(req);
     }
 
     @Operation(summary = "Deleta um livro pelo ID")
@@ -56,7 +57,7 @@ public class LivrosController {
 
     @Operation(summary = "Atualiza um livro existente")
     @PutMapping("/{id}")
-    public LivrosModel atualizar(@PathVariable Long id, @RequestBody LivrosModel livro) {
-        return livrosService.atualizar(id, livro);
+    public LivrosModel atualizar(@PathVariable Long id, @RequestBody LivroRequest req) {
+        return livrosService.atualizar(id, req);
     }
 }

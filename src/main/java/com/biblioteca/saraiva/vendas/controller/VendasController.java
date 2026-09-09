@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +35,6 @@ public class VendasController {
 
     private VendasRepository vendasRepository;
     private final VendasService vendasService;
-
-    public VendasController(VendasService vendasService) {
-        this.vendasService = vendasService;
-    }
 
     @Operation(summary = "Lista todas as vendas realizadas")
     @GetMapping

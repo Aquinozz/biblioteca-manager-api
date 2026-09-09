@@ -1,5 +1,6 @@
 package com.biblioteca.saraiva.livros.service;
 
+import com.biblioteca.saraiva.livros.dto.LivroRequest;
 import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LivrosService {
 
-    private LivrosRepository livrosRepository;
+    private final LivrosRepository livrosRepository;
 
     public LivrosModel buscarPorId(Long id) {
         log.info("Buscando livro por ID: {}", id);
@@ -27,7 +28,22 @@ public class LivrosService {
                 });
     }
 
-    public LivrosModel salvar(LivrosModel livro) {
+    public LivrosModel salvar(LivroRequest req) {
+
+        log.info("Pedindo request....");
+
+        LivrosModel livro = new LivrosModel();
+
+        log.info("Instanciando livro");
+
+        livro.setQuantidade(req.getQuantidade());
+        livro.setAnoCriacao(req.getAnoCriacao());
+        livro.setAutor(req.getAutor());
+        livro.setDescricao(req.getDescricao());
+        livro.setPreco(req.getPreco());
+        livro.setCategoria(req.getCategoria());
+        livro.setTitulo(req.getTitulo());
+
 
         log.info("Salvando livro - titulo: {}, autor: {}", livro.getTitulo(), livro.getAutor());
 
@@ -68,7 +84,9 @@ public class LivrosService {
         return livrosRepository.findAll();
     }
 
-    public LivrosModel atualizar(Long id, LivrosModel dadosAtualizados){
+    public LivrosModel atualizar(Long id, LivroRequest req){
+
+        LivrosModel dadosAtualizados = new LivrosModel();
 
         log.info("Atualizando livro - ID: {}", id);
 
@@ -78,23 +96,23 @@ public class LivrosService {
                     return new RuntimeException("Livro não encontrado");
                 });
 
-        if (dadosAtualizados.getTitulo() != null) {
-            livro.setTitulo(dadosAtualizados.getTitulo());
+        if (req.getTitulo() != null) {
+            livro.setTitulo(req.getTitulo());
         }
-        if (dadosAtualizados.getAutor() != null) {
-            livro.setAutor(dadosAtualizados.getAutor());
+        if (req.getAutor() != null) {
+            livro.setAutor(req.getAutor());
         }
-        if (dadosAtualizados.getDescricao() != null) {
-            livro.setDescricao(dadosAtualizados.getDescricao());
+        if (req.getDescricao() != null) {
+            livro.setDescricao(req.getDescricao());
         }
-        if (dadosAtualizados.getAnoCriacao() != null) {
-            livro.setAnoCriacao(dadosAtualizados.getAnoCriacao());
+        if (req.getAnoCriacao() != null) {
+            livro.setAnoCriacao(req.getAnoCriacao());
         }
-        if (dadosAtualizados.getPreco() != null) {
-            livro.setPreco(dadosAtualizados.getPreco());
+        if (req.getPreco() != null) {
+            livro.setPreco(req.getPreco());
         }
-        if (dadosAtualizados.getQuantidade() != null) {
-            livro.setQuantidade(dadosAtualizados.getQuantidade());
+        if (req.getQuantidade() != null) {
+            livro.setQuantidade(req.getQuantidade());
         }
 
         log.info("Livro atualizado com sucesso - ID: {}", id);
