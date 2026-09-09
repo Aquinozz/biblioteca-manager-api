@@ -3,6 +3,7 @@ package com.biblioteca.saraiva.livros.service;
 import com.biblioteca.saraiva.livros.enums.EnumLivro;
 import com.biblioteca.saraiva.livros.model.LivrosModel;
 import com.biblioteca.saraiva.livros.repository.LivrosRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,9 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LivrosService {
 
-    // Realiza uma conexão "Automatica" com o DB
-    @Autowired
     private LivrosRepository livrosRepository;
 
     public LivrosModel buscarPorId(Long id) {

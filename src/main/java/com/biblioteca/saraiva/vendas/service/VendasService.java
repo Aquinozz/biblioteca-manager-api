@@ -10,6 +10,7 @@ import com.biblioteca.saraiva.vendas.model.ItemVenda;
 import com.biblioteca.saraiva.vendas.model.VendasModel;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
@@ -21,16 +22,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class VendasService {
 
     private final LivrosRepository livrosRepository;
     private final VendasRepository vendasRepository;
-
-    public VendasService(LivrosRepository livrosRepository,
-                         VendasRepository vendasRepository) {
-        this.livrosRepository = livrosRepository;
-        this.vendasRepository = vendasRepository;
-    }
+    
 
 
 

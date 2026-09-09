@@ -2,6 +2,7 @@ package com.biblioteca.saraiva.dados.service;
 
 import com.biblioteca.saraiva.dados.dto.DadosResponse;
 import com.biblioteca.saraiva.vendas.repository.VendasRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,11 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DadosService {
 
     private VendasRepository vendasRepository;
 
-    public DadosService(VendasRepository vendasRepository) {
-        this.vendasRepository = vendasRepository;
-    }
 
     public Long getTotalVendas() {
         log.info("Realizando contagem de total de vendas...");
