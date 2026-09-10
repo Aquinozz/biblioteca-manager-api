@@ -86,7 +86,6 @@ public class LivrosService {
 
     public LivrosModel atualizar(Long id, LivroRequest req){
 
-        LivrosModel dadosAtualizados = new LivrosModel();
 
         log.info("Atualizando livro - ID: {}", id);
 
